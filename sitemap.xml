@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite-url/2020/08/03/%E5%BC%80%E5%90%AF%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9/</loc>
+    
+    <lastmod>2020-08-03T01:37:17.864Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite-url/2020/04/17/Hexo-Theme-LiveMyLife/</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
@@ -16,13 +23,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite-url/about/index.html</loc>
-    
-    <lastmod>2020-07-21T09:55:27.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite-url/archive/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
@@ -30,7 +30,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite-url/categories/index.html</loc>
+    <loc>http://yoursite-url/about/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
     
@@ -38,6 +38,13 @@
   
   <url>
     <loc>http://yoursite-url/tags/index.html</loc>
+    
+    <lastmod>2020-07-21T09:55:27.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite-url/categories/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
     
