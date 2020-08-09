@@ -23,13 +23,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite-url/archive/index.html</loc>
-    
-    <lastmod>2020-07-21T09:55:27.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite-url/about/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
@@ -37,7 +30,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite-url/tags/index.html</loc>
+    <loc>http://yoursite-url/archive/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
     
@@ -45,6 +38,13 @@
   
   <url>
     <loc>http://yoursite-url/categories/index.html</loc>
+    
+    <lastmod>2020-07-21T09:55:27.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite-url/tags/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
     
