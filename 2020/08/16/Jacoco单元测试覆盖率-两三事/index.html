@@ -71,12 +71,12 @@
 
   <!-- Pygments Highlight CSS -->
   
-<link rel="stylesheet" href="../../css/highlight.css">
-<link rel="stylesheet" href="../../css/widget.css">
-<link rel="stylesheet" href="../../css/rocket.css">
-<link rel="stylesheet" href="../../css/signature.css">
-<link rel="stylesheet" href="../../css/catalog.css">
-<link rel="stylesheet" href="../../css/livemylife.css">
+<link rel="stylesheet" href="../../../../css/highlight.css">
+<link rel="stylesheet" href="../../../../css/widget.css">
+<link rel="stylesheet" href="../../../../css/rocket.css">
+<link rel="stylesheet" href="../../../../css/signature.css">
+<link rel="stylesheet" href="../../../../css/catalog.css">
+<link rel="stylesheet" href="../../../../css/livemylife.css">
 
 
   
@@ -133,10 +133,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="http://exxjam.coding-pages.com/categories/Hexo-Theme-LiveMyLife/">
+  <link rel="canonical" href="http://exxjam.coding-pages.com/2020/08/16/Jacoco单元测试覆盖率-两三事/">
   <title>
     
-    either thin | or die
+    Jacoco单元测试覆盖率-两三事 - either thin | or die
     
   </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -266,8 +266,8 @@
   <!-- CDN: jsdelivr start -->
   <style type="text/css">
     header.intro-header {
-       /*page*/
-        background-image: url('https://cdn.jsdelivr.net/gh/JC0626/JC0626.github.io/undefined');
+       /*post*/
+        background-image: url('https://cdn.jsdelivr.net/gh/JC0626/JC0626.github.io//img/header_img/404_bg.jpg');
       
     }
 
@@ -290,10 +290,40 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>LIFE</h1>
-            <!--<hr class="small">-->
-            <span class="subheading">Stop complaining and thinking</span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#Unit" title="Unit">Unit</a>
+              
+            </div>
+            <h1>Jacoco单元测试覆盖率-两三事</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">
+              Posted by Jarvis on
+              2020-08-16 22:37:27
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">5</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">1.3k</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- 不蒜子统计 start -->
+            <span class="meta">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            <!-- WordCount end -->
+            
+
+
           </div>
           
         </div>
@@ -334,291 +364,230 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-	<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
+	<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-    <!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>公司最近很重视代码质量问题，自然的对单元测试要求也是越来越高，对新代码的Merge Request设置了Line Coverage &gt;= 80%，Branch Coverage &gt;= 80%的门槛。由于事出突然，身边的小伙伴们对此也是频频叫苦……毒害最深的要数Branch Coverage要求了，这也让我们深刻地体会到了UT的不简单。</p>
+<h2 id="Jacoco"><a href="#Jacoco" class="headerlink" title="Jacoco"></a>Jacoco</h2><p>言归正传，公司统一采用Jacoco来统计各项的覆盖率，包括类（Classes）、行（Lines）、方法（Methods）、指令（Instructions），分支（Branches）、圈复杂度（Cyclomatic Complexity）等维度。<br>Jacoco的pom.xml文件配置也很简单，网上一搜一大把，这边随意贴一个：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jacoco<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jacoco-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.8.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">destFile</span>&gt;</span>target/coverage-reports/jacoco-unit.exec<span class="tag">&lt;/<span class="name">destFile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dataFile</span>&gt;</span>target/coverage-reports/jacoco-unit.exec<span class="tag">&lt;/<span class="name">dataFile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>jacoco-initialize<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>prepare-agent<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>jacoco-site<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span>           </span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>report<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>与Maven集成后，可以使用mvn install指令跑UT结果，会在report文件下生成一个site文件夹，如图：<br><img src="/2020/08/16/Jacoco%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87-%E4%B8%A4%E4%B8%89%E4%BA%8B/jacoco.png" alt="jacoco"><br>点开其中的jacoco文件夹，打开index.html文件即可查看覆盖率情况。</p>
+<h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><p>当然这都不是本文的重点，有需要了解更加细节的内容可自行查阅。今儿主要是想介绍下Branch Coverage的麻烦之处，因为在提Merge Request的时候经常碰到分支覆盖率不达标的情况，于是本地跑了UT结果之后，查看了具体情况，如图：<br><img src="/2020/08/16/Jacoco%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87-%E4%B8%A4%E4%B8%89%E4%BA%8B/jacoco_result.png" alt="result"></p>
+<h5 id="Jacoco有三种棱形图案来表示Branch-Coverage："><a href="#Jacoco有三种棱形图案来表示Branch-Coverage：" class="headerlink" title="Jacoco有三种棱形图案来表示Branch Coverage："></a>Jacoco有三种棱形图案来表示Branch Coverage：</h5><p>1.红色棱形：没覆盖<br>2.黄色棱形：覆盖了部分<br>3.绿色棱形：全覆盖<br>如图中所示，黄色棱形经常伴随着1 of n branches missed的提示，就是告诉你还有几个逻辑没覆盖到。举个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (A &amp;&amp; B &amp;&amp; C) &#123;</span><br><span class="line">    <span class="comment">// xxx</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码如果想要分支覆盖率达到100%，就需要覆盖以下情况：<br>1.A满足，B满足，C满足<br>2.A不满足<br>3.A满足，B不满足<br>4.A满足，B满足，C不满足</p>
+<p>对于或条件的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (A || B || C) &#123;</span><br><span class="line">    <span class="comment">//.....   </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>想要全覆盖，需满足以下条件：<br>1.A不满足，B不满足，C不满足<br>2.A满足<br>3.A不满足，B满足<br>4.A不满足，B不满足，C满足</p>
+<p>举的例子都是if语句的，对于switch也是类似的情况，如果switch的条件中有多个情况，也都需要统统走一遍。总而言之，想要把分支覆盖率达到100%，就必须把所有的逻辑场景都考虑到，所以写UT并没有想象中的那么简单，业内有理论说业务开发时间与UT时间应该是1：1的关系，一点不假！</p>
+<h2 id="UT带来的好处"><a href="#UT带来的好处" class="headerlink" title="UT带来的好处"></a>UT带来的好处</h2><p>从我自身实际写UT的感受中，简单说下UT带来的好处：<br>1.如果是认真写UT，且覆盖率全面的话，确实能发现业务代码中的bug<br>2.如果是为他人代码写UT，有助于熟悉之前不了解的代码逻辑<br>3.锻炼思维逻辑，考虑会更加周到</p>
+<hr>
+<p>我在写UT的时候采用了Mockito与PowerMockito相结合的方式，对于一些static、final类，或者一些static方法，可以使用PowerMockito去mock，十分方便。</p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>比如我们当前正在写A类print方法的UT，其中用到了如下工具类的getImageUrl方法，我们需对其进行mock：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 工具类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ImageUtil</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getImageUrl</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ....   </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// A</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line"> </span><br><span class="line">　　<span class="comment">// print</span></span><br><span class="line">　　<span class="function"><span class="keyword">public</span> String <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">　　　　<span class="comment">// ....</span></span><br><span class="line">　　　　ImageUtil.getImageUrl(xxx);</span><br><span class="line">　　　　<span class="comment">// ....</span></span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="meta">@RunWith</span>(PowerMockRunner<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">@<span class="title">PrepareForTest</span>(</span>&#123;ImageUtil<span class="class">.<span class="keyword">class</span>&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">ATest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@InjectMocks</span></span><br><span class="line">    <span class="keyword">private</span> A a; <span class="comment">// 被测试类</span></span><br><span class="line">     </span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setup</span><span class="params">()</span></span>&#123;</span><br><span class="line">        PowerMockito.mockStatic(A<span class="class">.<span class="keyword">class</span>)</span>; <span class="comment">// 准备</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">　　<span class="meta">@Test</span></span><br><span class="line">　　<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPrint</span><span class="params">()</span> </span>&#123;</span><br><span class="line">　　　　Mockito.when(ImageUtil.getImageUrl(Mockito.anyString())).thenReturn(<span class="string">"Anything you want..."</span>);</span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然使用PowerMockito还能相对简单的对私有方法进行测试，原理是基于反射。但即使不用PowerMockito也能自行通过reflect机制对私有方法进行测试。</p>
+<hr>
+<p>就像我标题写的“两三事”一样，本文只是很随意的记录一些实际写UT过程中碰到的一些问题或者有趣的事情，如果想要看到很强的理论知识，那恐怕会让你失望了。</p>
+<p>前几天又用到了一个新的mock手段，“Mockito.RETURNS_DEEP_STUBS”。</p>
+<p>我们在写UT的时候，经常会出现如下情况：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设有一个企业对象</span></span><br><span class="line">Company company = .....;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 获取该企业内的某一个事业部下的某一个部门里某团队的某一个人的姓名</span></span><br><span class="line">company.getBU().getDepartment().getTeam().getSomeOne().getName()</span><br></pre></td></tr></table></figure>
+<p>对于一长串的调用的mock，“Mockito.RETURNS_DEEP_STUBS”能很方便的搞定。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 深度打桩</span></span><br><span class="line">Company company = Mockito.mock(Company<span class="class">.<span class="keyword">class</span>, <span class="title">Mockito</span>.<span class="title">RETURNS_DEEP_STUBS</span>)</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// mock</span></span><br><span class="line">Mockito.when(company.getBU().getDepartment().getTeam().getSomeOne().getName()).thenReturn(<span class="string">"小明"</span>);</span><br></pre></td></tr></table></figure>
+<p>而且不需要担心会有NPE问题的抛出，十分方便！</p>
 
-      
-<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1">
-      <!-- 归档列表 -->
 
-      
-
-      <!-- 归档列表 -->
-
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2020">
-          <span class="tag-text">2020</span>
-        </span>
-        <ul>
+        <hr>
+        <!-- Pager -->
+        <ul class="pager">
           
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/16/Java多线程一个有趣的题目/" style="color: #0085a1">
-              <span>
-                Java多线程一个有趣的题目
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
           
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-03
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/03/开启个人博客的第一天/" style="color: #0085a1">
-              <span>
-                开启个人博客的第一天
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            04-17
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/04/17/Hexo-Theme-LiveMyLife/" style="color: #0085a1">
-              <span>
-                Hexo-Theme-LiveMyLife
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+          <li class="next">
+            <a href="/2020/08/16/JavaScript中或逻辑运算符注意点/" data-toggle="tooltip" data-placement="top" title="JavaScript中或逻辑运算符注意点">Next Post &rarr;</a>
           </li>
           
         </ul>
+
+        
+        <!-- tip start -->
+        <div class="tip">
+          <p>
+            If you like this blog or find it useful for you, you are welcome to comment on it. You are also welcome to share this blog, so that more people can participate in it. If the images used in the blog infringe your copyright, please contact the author to delete them. Thank you !
+          </p>
+        </div>
+        <!-- tip end -->
+        
+
+        
+        <!-- Sharing Srtart -->
+        <!-- Social Social Share Post -->
+<!-- Docs:https://github.com/overtrue/share.js -->
+
+<div class="social-share" data-initialized="true" data-disabled="tencent ,douban ,qzone ,linkedin ,facebook ,google ,diandian" data-wechat-qrcode-helper="" align="center">
+  <ul class="list-inline text-center social-share-ul">
+    <!--<li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-twitter">
+        <i class="fa fa-twitter fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>-->
+    <li class="social-share-li">
+      <a class="social-share-icon icon-wechat">
+        <i class="fa fa-weixin fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-weibo">
+        <i class="fa fa-weibo fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-qq">
+        <i class="fa fa-qq fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=Jacoco单元测试覆盖率-两三事&body=Hi,I found this website and thought you might like it http://exxjam.coding-pages.com/2020/08/16/Jacoco单元测试覆盖率-两三事/">
+        <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- css & js -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"> -->
+<script defer="defer" async="true" src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+        <!-- Sharing End -->
+        
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+
+
+<!-- 2. gitment comment -->
+
+
+
+<!-- 3. disqus comment -->
+
+
+
+<!-- 4. valine comment -->
+
+
+    <div id="vcomments"></div>
+
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'kLtsxGXWwmbpyPPgj8RaX5Tu-gzGzoHsz',
+            appKey: 'lqrxU3K3qiCFMHwcxhBF5cMw'
+        })
+    </script>
+
+
+        <!-- comments end -->
+        <hr>
+
       </div>
-      
 
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
 
-    </div>
-  </div>
-</div>
-
-
-      <!-- 如果开启评论功能 -->
-      
-    </div>
-
-    <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
     
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
         
-<!-- <h5>VISITORS</h5> -->
-<h5><a href="/">VISITORS</a></h5>
-<div class="widget">
-  <span>
-    Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
-  </span>
-  <br />
-  <span>
-    <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
-  </span>
-</div>
-
-
-        <hr>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#背景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Jacoco"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Jacoco</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重点"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">重点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Jacoco有三种棱形图案来表示Branch-Coverage："><span class="toc-nav-number">3.0.0.1.</span> <span class="toc-nav-text">Jacoco有三种棱形图案来表示Branch Coverage：</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#UT带来的好处"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">UT带来的好处</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#举个例子"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">举个例子</span></a></li></ol>
+        
+        </div>
+      </aside>
     
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
         <!-- Featured Tags -->
-
-<section>
-  <!-- no hr -->
-  <h5><a href="/tags/">FEATURED TAGS</a></h5>
-  <div class="tags">
-    
-    
-    <a href="/tags/#Java" title="Java" rel="1">Java</a>
-    
-    
-    
-    <a href="/tags/#Thread" title="Thread" rel="1">Thread</a>
-    
-    
-    
-    <a href="/tags/#Hexo" title="Hexo" rel="1">Hexo</a>
-    
-    
-    
-    <a href="/tags/#Hexo-Theme-LiveMyLife" title="Hexo-Theme-LiveMyLife" rel="1">Hexo-Theme-LiveMyLife</a>
-    
-    
-    
-    <a href="/tags/#Life" title="Life" rel="1">Life</a>
-    
-    
-  </div>
-</section>
-
-
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
-
-    
-    <img id="avatar_pic" src="/img/avatar/wangzai.jpg" alt="avatar_pic" style="box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -moz-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);" />
-    
-
-    
-    <p>I have a lovely cat in my life...</p>
-    
-
-    <!-- SNS Link -->
-    <ul class="list-inline">
-      
-
-      
-      <li>
-        <a target="_blank" href="https://github.com/JC0626">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-      <li>
-        <a target="_blank" href="https://www.zhihu.com/people/jia-men-kou-mai-meng-8">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa  fa-stack-1x fa-inverse">知</i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-      <li>
-        <a target="_blank" href="http://weibo.com/u/2647962270">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-    </ul>
-  </div>
-</section>
-
-        <hr>
-    
         
-<!-- <h5>RECENT POSTS</h5> -->
-<h5><a href="/">RECENT POSTS</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="../../2020/08/16/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%80%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E9%A2%98%E7%9B%AE/">
-      <li>Java多线程一个有趣的题目</li>
-    </a>
-    
-    <a href="../../2020/08/03/%E5%BC%80%E5%90%AF%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A4%A9/">
-      <li>开启个人博客的第一天</li>
-    </a>
-    
-    <a href="../../2020/04/17/Hexo-Theme-LiveMyLife/">
-      <li>Hexo-Theme-LiveMyLife</li>
-    </a>
-    
-  </ul>
-</div>
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">FEATURED TAGS</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#Unit" title="Unit">Unit</a>
+            
+          </div>
+        </section>
+        
 
-
-        <hr>
-    
         <!-- Friends Blog -->
-
-
-        <hr>
-    
         
-    <!-- <h5>ARCHIVES</h5> -->
-    <h5><a href="/archives/">ARCHIVES</a></h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">八月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/04/">四月 2020</a><span class="archive-list-count">1</span></li></ul>
+      </div>
     </div>
-
-
-        <hr>
-    
-        <!-- Categories -->
-
-<!-- <h5>categories</h5> -->
-<h5><a href="/categories/">CATEGORIES</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="/categories/#Tech">
-      <li>Tech</li>
-    </a>
-    
-    <a href="/categories/#Hexo-Theme-LiveMyLife">
-      <li>Hexo-Theme-LiveMyLife</li>
-    </a>
-    
-    <a href="/categories/#MyLife">
-      <li>MyLife</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
-</div>
-
-    
   </div>
-</div>
+</article>
+
+
+
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+<!-- anchorjs end -->
+
 
 
 	<!-- Footer (contains ThemeColor、viewer) -->
@@ -735,7 +704,7 @@
     let jsdelivr = "https://cdn.jsdelivr.net/gh/";
     let gh = "JC0626";
     let ghPages = gh + ".github.io";
-    let pagePath = "categories/Hexo-Theme-LiveMyLife/index.html";
+    let pagePath = "2020/08/16/Jacoco单元测试覆盖率-两三事/";
     let jsdelivrurl;
     if (pagePath.indexOf("index.html") != -1) {
       jsdelivrurl = jsdelivr + gh + "/" + ghPages;
