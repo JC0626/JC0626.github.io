@@ -71,12 +71,12 @@
 
   <!-- Pygments Highlight CSS -->
   
-<link rel="stylesheet" href="../css/highlight.css">
-<link rel="stylesheet" href="../css/widget.css">
-<link rel="stylesheet" href="../css/rocket.css">
-<link rel="stylesheet" href="../css/signature.css">
-<link rel="stylesheet" href="../css/catalog.css">
-<link rel="stylesheet" href="../css/livemylife.css">
+<link rel="stylesheet" href="../../../../css/highlight.css">
+<link rel="stylesheet" href="../../../../css/widget.css">
+<link rel="stylesheet" href="../../../../css/rocket.css">
+<link rel="stylesheet" href="../../../../css/signature.css">
+<link rel="stylesheet" href="../../../../css/catalog.css">
+<link rel="stylesheet" href="../../../../css/livemylife.css">
 
 
   
@@ -133,10 +133,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="http://exxjam.coding-pages.com/archives/">
+  <link rel="canonical" href="http://exxjam.coding-pages.com/2020/09/10/为中途接手的项目搭日志/">
   <title>
     
-    Stop complaining and thinking
+    为中途接手的项目搭日志 - Stop complaining and thinking
     
   </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -266,8 +266,8 @@
   <!-- CDN: jsdelivr start -->
   <style type="text/css">
     header.intro-header {
-       /*page*/
-        background-image: url('https://cdn.jsdelivr.net/gh/JC0626/JC0626.github.io/undefined');
+       /*post*/
+        background-image: url('https://cdn.jsdelivr.net/gh/JC0626/JC0626.github.io//img/header_img/tag_bg.jpg');
       
     }
 
@@ -290,10 +290,42 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>LIFE</h1>
-            <!--<hr class="small">-->
-            <span class="subheading">Stop complaining and thinking</span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+              
+              <a class="tag" href="/tags/#Log" title="Log">Log</a>
+              
+            </div>
+            <h1>为中途接手的项目搭日志</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">
+              Posted by Jarvis on
+              2020-09-10 22:56:38
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">3</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">816</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- 不蒜子统计 start -->
+            <span class="meta">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            <!-- WordCount end -->
+            
+
+
           </div>
           
         </div>
@@ -334,366 +366,230 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-	<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
+	<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-    <!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近中途接手了一个后台管理系统，基于springMvc来实现的，使用群体是实体酒店的工作人员和我们公司的一些业务人员。系统已经上线很久了，但问题还存在不少，交给我们也是希望能够完善一下。</p>
+<p>老大优先安排解决线上优先级高的bug，但解决bug的过程中，最棘手的问题也暴露出来了，这个系统没有一套完善的日志系统，只是零散的记录了一些当时开发认为重要的点。导致线上出现问题的case查起来十分吃力，甚至压根就没记录。</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>在解决bug的同时，抽出一部分精力来搭建一套日志系统，方便日后排雷。<br>对于springMvc，我自然就想到了Spring自带的RequestBodyAdvice和ResponseBodyAdvice，目前暂时还没有对Request的特殊要求（加密解密等等），所以暂时就使用ResponseBodyAdvice来拦截记录日志。另外老大要求只需记录部分接口就行，这边想到了两个方法：</p>
+<ol>
+<li>实现ResponseBodyAdvice接口的supports方法，其中通过参数returnType的方法来判断指定需要记在日志里的方法。但这会导致if语句（switch语句）过长。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">returnType.getMethod().getName();</span><br></pre></td></tr></table></figure></li>
+<li>另外想到了自定义注解，在需要被日志记录的方法上打上自己的注解，依旧通过supports来实现，判断当前方法是否被自定义注解标注，且该方法灵活性高。</li>
+</ol>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul>
+<li>RequestBodyAdvice：在 sping 4.2 新加入的一个接口，它可以使用在 @RequestBody 或 HttpEntity 修改的参数之前进行参数的处理，比如进行参数的解密。</li>
+<li>ResponseBodyAdvice：在 spring 4.1 新加入的一个接口，在消息体被HttpMessageConverter写入之前允许Controller 中 @ResponseBody修饰的方法或ResponseEntity调整响应中的内容，比如进行相应的加密。</li>
+</ul>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>1.自定义注解实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> LogAnnotation &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
-<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1">
-      <!-- 归档列表 -->
+<p>2.拦截器实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LogResponseControllerAdvice</span> <span class="keyword">implements</span> <span class="title">ResponseBodyAdvice</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(MethodParameter methodParameter, Class converterType)</span> </span>&#123;</span><br><span class="line">        Method method = methodParameter.getMethod();</span><br><span class="line">        <span class="keyword">return</span> method.isAnnotationPresent(LogAnnotation<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">beforeBodyWrite</span><span class="params">(Object body, MethodParameter returnType, MediaType selectedContentType,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Map&lt;String, String&gt; indexedTags = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        String requestLog = ServiceContext.get(LogUtils.getThreadLocalLogRequest()) == <span class="keyword">null</span> ?</span><br><span class="line">                <span class="string">""</span> : ServiceContext.get(LogUtils.getThreadLocalLogRequest()).toString();</span><br><span class="line">        String responseLog = JsonUtils.toString(body);</span><br><span class="line">        indexedTags.put(<span class="string">"request"</span>, requestLog);</span><br><span class="line">        indexedTags.put(<span class="string">"response"</span>, responseLog);</span><br><span class="line">        LogBaseInfo logBaseInfo = ServiceContext.get(LogBaseInfo<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="keyword">if</span> (logBaseInfo != <span class="keyword">null</span>) &#123;</span><br><span class="line">            indexedTags.put(<span class="string">"uid"</span>, logBaseInfo.getUid());</span><br><span class="line">            indexedTags.put(<span class="string">"hotelId"</span>, logBaseInfo.getHotelId());</span><br><span class="line">            indexedTags.put(<span class="string">"traceLogId"</span>, logBaseInfo.getTraceLogId());</span><br><span class="line">        &#125;</span><br><span class="line">        indexedTags.put(<span class="string">"ServiceName"</span>,</span><br><span class="line">                String.format(<span class="string">"controller_%s"</span>, returnType.getMethod().getName()));</span><br><span class="line"></span><br><span class="line">        Log.logTags(<span class="string">"我们公司对日志的唯一标识"</span>, indexedTags, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> body;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ServiceContext是用来记录一次请求中的request信息，通过内部通过ThreadLocal&lt;Map&lt;String, Object&gt;&gt;来记录，大家不必理会，只需知道此处是用来获取当前方法的请求。</li>
+<li>LogBaseInfo 是用来获取存在ServiceContext中的request里的head信息（不重要）。</li>
+<li>Log.logTags 是我们公司对外的记日志接口而已。</li>
+<li>returnType.getMethod().getName() 用来返回当前方法名。<br>Anyway，beforeBodyWrite方法中只是做了一个记日志操作。</li>
+</ul>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>最后只需在指定接口方法上打上@LogAnnotation注解，该方法的请求和结果都会记录在日志，十分的方便。</p>
 
-      
 
-      <!-- 归档列表 -->
-
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2020">
-          <span class="tag-text">2020</span>
-        </span>
-        <ul>
+        <hr>
+        <!-- Pager -->
+        <ul class="pager">
           
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            09-10
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/09/10/为中途接手的项目搭日志/" style="color: #0085a1">
-              <span>
-                为中途接手的项目搭日志
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
           
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-17
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/17/生活那些事/" style="color: #0085a1">
-              <span>
-                生活那些事
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/16/Jacoco单元测试覆盖率-两三事/" style="color: #0085a1">
-              <span>
-                Jacoco单元测试覆盖率-两三事
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/16/JavaScript中或逻辑运算符注意点/" style="color: #0085a1">
-              <span>
-                JavaScript中或逻辑运算符注意点
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/16/Java多线程一个有趣的题目/" style="color: #0085a1">
-              <span>
-                Java多线程一个有趣的题目
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-03
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/03/开启个人博客的第一天/" style="color: #0085a1">
-              <span>
-                开启个人博客的第一天
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            04-17
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/04/17/Hexo-Theme-LiveMyLife/" style="color: #0085a1">
-              <span>
-                Hexo-Theme-LiveMyLife
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+          <li class="next">
+            <!--<a href="/2020/08/17/生活那些事/" data-toggle="tooltip" data-placement="top" title="生活那些事">Next Post &rarr;</a>-->
+            <a href="/2020/08/17/生活那些事/" data-placement="top" title="生活那些事">Next Post &rarr;</a>
           </li>
           
         </ul>
+
+        
+        <!-- tip start -->
+        <div class="tip">
+          <p>
+            If you like this blog or find it useful for you, you are welcome to comment on it. You are also welcome to share this blog, so that more people can participate in it. If the images used in the blog infringe your copyright, please contact the author to delete them. Thank you !
+          </p>
+        </div>
+        <!-- tip end -->
+        
+
+        
+        <!-- Sharing Srtart -->
+        <!-- Social Social Share Post -->
+<!-- Docs:https://github.com/overtrue/share.js -->
+
+<div class="social-share" data-initialized="true" data-disabled="tencent ,douban ,qzone ,linkedin ,facebook ,google ,diandian" data-wechat-qrcode-helper="" align="center">
+  <ul class="list-inline text-center social-share-ul">
+    <!--<li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-twitter">
+        <i class="fa fa-twitter fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>-->
+    <li class="social-share-li">
+      <a class="social-share-icon icon-wechat">
+        <i class="fa fa-weixin fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-weibo">
+        <i class="fa fa-weibo fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-qq">
+        <i class="fa fa-qq fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=为中途接手的项目搭日志&body=Hi,I found this website and thought you might like it http://exxjam.coding-pages.com/2020/09/10/为中途接手的项目搭日志/">
+        <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- css & js -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"> -->
+<script defer="defer" async="true" src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+        <!-- Sharing End -->
+        
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+
+
+<!-- 2. gitment comment -->
+
+
+
+<!-- 3. disqus comment -->
+
+
+
+<!-- 4. valine comment -->
+
+
+    <div id="vcomments"></div>
+
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'kLtsxGXWwmbpyPPgj8RaX5Tu-gzGzoHsz',
+            appKey: 'lqrxU3K3qiCFMHwcxhBF5cMw'
+        })
+    </script>
+
+
+        <!-- comments end -->
+        <hr>
+
       </div>
-      
 
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
 
-    </div>
-  </div>
-</div>
-
-
-      <!-- 如果开启评论功能 -->
-      
-    </div>
-
-    <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
     
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
         
-<!-- <h5>VISITORS</h5> -->
-<h5><a href="/">VISITORS</a></h5>
-<div class="widget">
-  <span>
-    Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
-  </span>
-  <br />
-  <span>
-    <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
-  </span>
-</div>
-
-
-        <hr>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#背景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解决办法"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">解决办法</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#前置知识"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">前置知识</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#代码实现"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">代码实现</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#最后"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">最后</span></a></li></ol>
+        
+        </div>
+      </aside>
     
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
         <!-- Featured Tags -->
-
-<section>
-  <!-- no hr -->
-  <h5><a href="/tags/">FEATURED TAGS</a></h5>
-  <div class="tags">
-    
-    
-    <a href="/tags/#Unit" title="Unit" rel="1">Unit</a>
-    
-    
-    
-    <a href="/tags/#JavaScript" title="JavaScript" rel="1">JavaScript</a>
-    
-    
-    
-    <a href="/tags/#Java" title="Java" rel="2">Java</a>
-    
-    
-    
-    <a href="/tags/#Thread" title="Thread" rel="1">Thread</a>
-    
-    
-    
-    <a href="/tags/#Life" title="Life" rel="1">Life</a>
-    
-    
-    
-    <a href="/tags/#Log" title="Log" rel="1">Log</a>
-    
-    
-    
-    <a href="/tags/#thinking" title="thinking" rel="1">thinking</a>
-    
-    
-    
-    <a href="/tags/#fun" title="fun" rel="1">fun</a>
-    
-    
-  </div>
-</section>
-
-
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
-
-    
-    <img id="avatar_pic" src="/img/avatar/wangzai.jpg" alt="avatar_pic" style="box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -moz-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);" />
-    
-
-    
-    <p>I have a lovely cat in my life...</p>
-    
-
-    <!-- SNS Link -->
-    <ul class="list-inline">
-      
-
-      
-      <li>
-        <a target="_blank" href="https://github.com/JC0626">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-      <li>
-        <a target="_blank" href="https://www.zhihu.com/people/jia-men-kou-mai-meng-8">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa  fa-stack-1x fa-inverse">知</i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-      <li>
-        <a target="_blank" href="http://weibo.com/u/2647962270">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-    </ul>
-  </div>
-</section>
-
-        <hr>
-    
         
-<!-- <h5>RECENT POSTS</h5> -->
-<h5><a href="/">RECENT POSTS</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="../2020/09/10/%E4%B8%BA%E4%B8%AD%E9%80%94%E6%8E%A5%E6%89%8B%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%90%AD%E6%97%A5%E5%BF%97/">
-      <li>为中途接手的项目搭日志</li>
-    </a>
-    
-    <a href="../2020/08/17/%E7%94%9F%E6%B4%BB%E9%82%A3%E4%BA%9B%E4%BA%8B/">
-      <li>生活那些事</li>
-    </a>
-    
-    <a href="../2020/08/16/Jacoco%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87-%E4%B8%A4%E4%B8%89%E4%BA%8B/">
-      <li>Jacoco单元测试覆盖率-两三事</li>
-    </a>
-    
-    <a href="../2020/08/16/JavaScript%E4%B8%AD%E6%88%96%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6%E6%B3%A8%E6%84%8F%E7%82%B9/">
-      <li>JavaScript中或逻辑运算符注意点</li>
-    </a>
-    
-    <a href="../2020/08/16/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%80%E4%B8%AA%E6%9C%89%E8%B6%A3%E7%9A%84%E9%A2%98%E7%9B%AE/">
-      <li>Java多线程一个有趣的题目</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">FEATURED TAGS</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#Java" title="Java">Java</a>
+            
+            <a class="tag" href="/tags/#Log" title="Log">Log</a>
+            
+          </div>
+        </section>
         
-    <!-- <h5>ARCHIVES</h5> -->
-    <h5><a href="/archives/">ARCHIVES</a></h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="2020/04/">四月 2020</a><span class="archive-list-count">1</span></li></ul>
+
+        <!-- Friends Blog -->
+        
+      </div>
     </div>
-
-
-        <hr>
-    
-        <!-- Categories -->
-
-<!-- <h5>categories</h5> -->
-<h5><a href="/categories/">CATEGORIES</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="/categories/#Tech">
-      <li>Tech</li>
-    </a>
-    
-    <a href="/categories/#Work">
-      <li>Work</li>
-    </a>
-    
-    <a href="/categories/#MyLife">
-      <li>MyLife</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
-</div>
-
-    
   </div>
-</div>
+</article>
+
+
+
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+<!-- anchorjs end -->
+
 
 
 	<!-- Footer (contains ThemeColor、viewer) -->
@@ -810,7 +706,7 @@
     let jsdelivr = "https://cdn.jsdelivr.net/gh/";
     let gh = "JC0626";
     let ghPages = gh + ".github.io";
-    let pagePath = "archives/index.html";
+    let pagePath = "2020/09/10/为中途接手的项目搭日志/";
     let jsdelivrurl;
     if (pagePath.indexOf("index.html") != -1) {
       jsdelivrurl = jsdelivr + gh + "/" + ghPages;

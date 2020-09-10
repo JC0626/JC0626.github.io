@@ -57,8 +57,8 @@
   <meta name="baidu-site-verification" content="PpzM9WxOJU" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="It&#39;s a Jarvis&#39;s blog" />
-  <meta name="keyword" content="Jarvis,Life,IT blog,Blog" />
+  <meta name="description" content="It&#39;s a Jarvis&#39;s blog, about work, tech and life." />
+  <meta name="keyword" content="Jarvis, Life, IT blog, Blog, Work" />
   <link rel="shortcut icon" href="/img/avatar/roguerabbit.jpg" />
 
   <!-- Place this tag in your head or just before your close body tag. -->
@@ -136,7 +136,7 @@
   <link rel="canonical" href="http://exxjam.coding-pages.com/2020/08/16/Jacoco单元测试覆盖率-两三事/">
   <title>
     
-    Jacoco单元测试覆盖率-两三事 - either thin | or die
+    Jacoco单元测试覆盖率-两三事 - Stop complaining and thinking
     
   </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -377,7 +377,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.jacoco<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jacoco-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.8.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">destFile</span>&gt;</span>target/coverage-reports/jacoco-unit.exec<span class="tag">&lt;/<span class="name">destFile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dataFile</span>&gt;</span>target/coverage-reports/jacoco-unit.exec<span class="tag">&lt;/<span class="name">dataFile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>jacoco-initialize<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>prepare-agent<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>jacoco-site<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span>           </span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>report<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>与Maven集成后，可以使用mvn install指令跑UT结果，会在report文件下生成一个site文件夹，如图：<br><img src="/2020/08/16/Jacoco%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87-%E4%B8%A4%E4%B8%89%E4%BA%8B/jacoco.png" alt="jacoco"><br>点开其中的jacoco文件夹，打开index.html文件即可查看覆盖率情况。</p>
 <h2 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h2><p>当然这都不是本文的重点，有需要了解更加细节的内容可自行查阅。今儿主要是想介绍下Branch Coverage的麻烦之处，因为在提Merge Request的时候经常碰到分支覆盖率不达标的情况，于是本地跑了UT结果之后，查看了具体情况，如图：<br><img src="/2020/08/16/Jacoco%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87-%E4%B8%A4%E4%B8%89%E4%BA%8B/jacoco_result.png" alt="result"></p>
-<h5 id="Jacoco有三种棱形图案来表示Branch-Coverage："><a href="#Jacoco有三种棱形图案来表示Branch-Coverage：" class="headerlink" title="Jacoco有三种棱形图案来表示Branch Coverage："></a>Jacoco有三种棱形图案来表示Branch Coverage：</h5><p>1.红色棱形：没覆盖<br>2.黄色棱形：覆盖了部分<br>3.绿色棱形：全覆盖<br>如图中所示，黄色棱形经常伴随着1 of n branches missed的提示，就是告诉你还有几个逻辑没覆盖到。举个例子：</p>
+<p><strong>Jacoco有三种棱形图案来表示Branch Coverage：</strong><br>1.红色棱形：没覆盖<br>2.黄色棱形：覆盖了部分<br>3.绿色棱形：全覆盖<br>如图中所示，黄色棱形经常伴随着1 of n branches missed的提示，就是告诉你还有几个逻辑没覆盖到。举个例子：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (A &amp;&amp; B &amp;&amp; C) &#123;</span><br><span class="line">    <span class="comment">// xxx</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述代码如果想要分支覆盖率达到100%，就需要覆盖以下情况：<br>1.A满足，B满足，C满足<br>2.A不满足<br>3.A满足，B不满足<br>4.A满足，B满足，C不满足</p>
 <p>对于或条件的例子：</p>
@@ -403,6 +403,11 @@
         <hr>
         <!-- Pager -->
         <ul class="pager">
+          
+          <li class="previous">
+            <!--<a href="/2020/08/17/生活那些事/" data-toggle="tooltip" data-placement="top" title="生活那些事">&larr; Previous Post</a>-->
+            <a href="/2020/08/17/生活那些事/" data-placement="top" title="生活那些事">&larr; Previous Post</a>
+          </li>
           
           
           <li class="next">
@@ -507,7 +512,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#背景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Jacoco"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Jacoco</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重点"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">重点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Jacoco有三种棱形图案来表示Branch-Coverage："><span class="toc-nav-number">3.0.0.1.</span> <span class="toc-nav-text">Jacoco有三种棱形图案来表示Branch Coverage：</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#UT带来的好处"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">UT带来的好处</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#举个例子"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">举个例子</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#背景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Jacoco"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Jacoco</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重点"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">重点</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#UT带来的好处"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">UT带来的好处</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#举个例子"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">举个例子</span></a></li></ol>
         
         </div>
       </aside>
