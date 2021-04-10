@@ -71,12 +71,12 @@
 
   <!-- Pygments Highlight CSS -->
   
-<link rel="stylesheet" href="../../css/highlight.css">
-<link rel="stylesheet" href="../../css/widget.css">
-<link rel="stylesheet" href="../../css/rocket.css">
-<link rel="stylesheet" href="../../css/signature.css">
-<link rel="stylesheet" href="../../css/catalog.css">
-<link rel="stylesheet" href="../../css/livemylife.css">
+<link rel="stylesheet" href="../../../../css/highlight.css">
+<link rel="stylesheet" href="../../../../css/widget.css">
+<link rel="stylesheet" href="../../../../css/rocket.css">
+<link rel="stylesheet" href="../../../../css/signature.css">
+<link rel="stylesheet" href="../../../../css/catalog.css">
+<link rel="stylesheet" href="../../../../css/livemylife.css">
 
 
   
@@ -133,10 +133,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="http://exxjam.coding-pages.com/tags/Log/">
+  <link rel="canonical" href="http://exxjam.coding-pages.com/2021/04/10/SpringBoot源码初探一/">
   <title>
     
-    Stop complaining and thinking
+    SpringBoot源码初探一 - Stop complaining and thinking
     
   </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -266,8 +266,8 @@
   <!-- CDN: jsdelivr start -->
   <style type="text/css">
     header.intro-header {
-       /*page*/
-        background-image: url('https://cdn.jsdelivr.net/gh/JC0626/JC0626.github.io/undefined');
+       /*post*/
+        background-image: url('https://cdn.jsdelivr.net/gh/JC0626/JC0626.github.io//img/header_img/tag_bg.jpg');
       
     }
 
@@ -290,10 +290,42 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>LIFE &amp; WOEK</h1>
-            <!--<hr class="small">-->
-            <span class="subheading">Stop complaining and thinking</span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+              
+              <a class="tag" href="/tags/#SpringBoot" title="SpringBoot">SpringBoot</a>
+              
+            </div>
+            <h1>SpringBoot源码初探一</h1>
+            <h2 class="subheading">初始化SpringApplication对象</h2>
+            <span class="meta">
+              Posted by Jarvis on
+              2021-04-10 11:39:31
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">4</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">1.1k</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- 不蒜子统计 start -->
+            <span class="meta">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            <!-- WordCount end -->
+            
+
+
           </div>
           
         </div>
@@ -334,379 +366,241 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-	<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
+	<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-    <!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+        <p>现如今的公司里，随处可见SpringBoot的身影，无论是搭建Web应用、纯服务应用还是Job应用，都在使用着SpringBoot。大有一种“万物皆可SpringBoot”的趋势。</p>
+<p>但工作之余静下心来细想，似乎对SpringBoot的认知一直停留在配置简单，搭建方便，上手快速等层面。再加上日常繁重的工作任务和SpringBoot“友好”的开发体验，确实容易让人忽略了那份对底层原理探索的冲动。</p>
+<p>今天！决定重拾这份冲动，决定利用闲暇时间，慢慢啃下这块骨头。<br>PS：我这边看的是<font color="red">2.4.4</font>版本的源码</p>
+<h2 id="提问"><a href="#提问" class="headerlink" title="提问"></a>提问</h2><p>大家对于如何看源码有什么建议吗？欢迎在评论中分享，互相学习。<br>在网上查了一遍答案，似乎大家都比较能接受先整体再细节这种方案。</p>
+<h2 id="从入口开始"><a href="#从入口开始" class="headerlink" title="从入口开始"></a>从入口开始</h2><p>伟大而又神秘的开始，天知道一个如此简单的run()里面干了些什么？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      SpringApplication.run(DemoApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">      <span class="comment">// new SpringApplication(DemoApplication.class).run(args);</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟着断点进到如下代码（切记务必使用断点来帮助看源码）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ConfigurableApplicationContext <span class="title">run</span><span class="params">(Class&lt;?&gt;[] primarySources, String[] args)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> SpringApplication(primarySources).run(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看代码能简单知道，这边SpringBoot做了两件事。</p>
+<ol>
+<li>用启动类传入的class初始化SpringApplication对象（本文涉及的内容）<ul>
+<li>因此我们也完全可以用new SpringApplication(DemoApplication.class).run(args)的方式在main方法中来启动。</li>
+</ul>
+</li>
+<li>初始化SpringApplication对象后执行run()（这块后续更新，看的脑壳疼）</li>
+</ol>
+<h2 id="初始化SpringApplication对象"><a href="#初始化SpringApplication对象" class="headerlink" title="初始化SpringApplication对象"></a>初始化SpringApplication对象</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个新的实例，这个应用程序的上下文将要从指定的来源加载Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SpringApplication</span><span class="params">(ResourceLoader resourceLoader, Class&lt;?&gt;... primarySources)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 资源初始化资源加载器，默认为null</span></span><br><span class="line">    <span class="keyword">this</span>.resourceLoader = resourceLoader;</span><br><span class="line">    <span class="comment">// 断言主要加载资源类不能为 null，否则报错</span></span><br><span class="line">    Assert.notNull(primarySources, <span class="string">"PrimarySources must not be null"</span>);</span><br><span class="line">    <span class="comment">// 初始化主要加载资源类集合并去重</span></span><br><span class="line">    <span class="keyword">this</span>.primarySources = <span class="keyword">new</span> LinkedHashSet&lt;&gt;(Arrays.asList(primarySources));</span><br><span class="line">    <span class="comment">// 推断当前 WEB 应用类型，一共有三种：NONE,SERVLET,REACTIVE</span></span><br><span class="line">    <span class="keyword">this</span>.webApplicationType = WebApplicationType.deduceFromClasspath();</span><br><span class="line">    <span class="comment">// 设置回调接口，可用于在使用BootstrapRegistry之前初始化它</span></span><br><span class="line">    <span class="keyword">this</span>.bootstrappers = <span class="keyword">new</span> ArrayList&lt;&gt;(getSpringFactoriesInstances(Bootstrapper<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">    <span class="comment">// 设置应用上下文初始化器,从"META-INF/spring.factories"读取ApplicationContextInitializer类的实例名称集合并去重，并进行set去重。（一共7个）</span></span><br><span class="line">    setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">    <span class="comment">// 设置监听器,从"META-INF/spring.factories"读取ApplicationListener类的实例名称集合并去重，并进行set去重。（一共11个）</span></span><br><span class="line">    setListeners((Collection) getSpringFactoriesInstances(ApplicationListener<span class="class">.<span class="keyword">class</span>))</span>;</span><br><span class="line">    <span class="comment">// 推断主入口应用类，通过当前调用栈，获取Main方法所在类，并赋值给mainApplicationClass</span></span><br><span class="line">    <span class="keyword">this</span>.mainApplicationClass = deduceMainApplicationClass();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进入里面使用到的各种方法，会发现用了大量的反射来进行实例化。<br>上述构造方法中，有一个用来判断当前应用程序的类型方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// WebApplicationType的类型：NONE,SERVLET,REACTIVE</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> WebApplicationType <span class="title">deduceFromClasspath</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (ClassUtils.isPresent(WEBFLUX_INDICATOR_CLASS, <span class="keyword">null</span>) &amp;&amp; !ClassUtils.isPresent(WEBMVC_INDICATOR_CLASS, <span class="keyword">null</span>)</span><br><span class="line">        &amp;&amp; !ClassUtils.isPresent(JERSEY_INDICATOR_CLASS, <span class="keyword">null</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> WebApplicationType.REACTIVE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (String className : SERVLET_INDICATOR_CLASSES) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!ClassUtils.isPresent(className, <span class="keyword">null</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> WebApplicationType.NONE;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> WebApplicationType.SERVLET;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Web Reactive：WebApplicationType.REACTIVE</li>
+<li>Web Servlet： WebApplicationType.SERVLET</li>
+<li>非Web：WebApplicationType.NONE</li>
+</ul>
+<p>另外在SpringApplication的构造方法中还有一个很重要的方法getSpringFactoriesInstances()，构造方法中<font color="red">设置回调接口</font>，<font color="red">设置应用上下文初始化器</font>，<font color="red">设置监听器</font>内部都使用到了该方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> &lt;T&gt; <span class="function">Collection&lt;T&gt; <span class="title">getSpringFactoriesInstances</span><span class="params">(Class&lt;T&gt; type, Class&lt;?&gt;[] parameterTypes, Object... args)</span> </span>&#123;</span><br><span class="line">   ClassLoader classLoader = getClassLoader();</span><br><span class="line">   <span class="comment">// Use names and ensure unique to protect against duplicates</span></span><br><span class="line">   Set&lt;String&gt; names = <span class="keyword">new</span> LinkedHashSet&lt;&gt;(SpringFactoriesLoader.loadFactoryNames(type, classLoader));</span><br><span class="line">   List&lt;T&gt; instances = createSpringFactoriesInstances(type, parameterTypes, classLoader, args, names);</span><br><span class="line">   AnnotationAwareOrderComparator.sort(instances);</span><br><span class="line">   <span class="keyword">return</span> instances;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法用了工厂模式，通过传入的Class<T> type，在“META-INF/spring.factories”中找到对应需要初始化的类，然后通过createSpringFactoriesInstances方法进行反射初始化。</T></p>
+<p>构造方法中最后执行的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.mainApplicationClass = deduceMainApplicationClass();</span><br></pre></td></tr></table></figure>
+<p>目的是用来找到Main方法所在的启动类，其中通过获取方法调用栈的逻辑new RuntimeException().getStackTrace()来获取;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Class&lt;?&gt; deduceMainApplicationClass() &#123;</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">       <span class="comment">// 获取当前的方法调用栈</span></span><br><span class="line">      StackTraceElement[] stackTrace = <span class="keyword">new</span> RuntimeException().getStackTrace();</span><br><span class="line">      <span class="keyword">for</span> (StackTraceElement stackTraceElement : stackTrace) &#123;</span><br><span class="line">         <span class="keyword">if</span> (<span class="string">"main"</span>.equals(stackTraceElement.getMethodName())) &#123;</span><br><span class="line">            <span class="keyword">return</span> Class.forName(stackTraceElement.getClassName());</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (ClassNotFoundException ex) &#123;</span><br><span class="line">      <span class="comment">// Swallow and continue</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
-<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1">
-      <!-- 归档列表 -->
-
-      
-
-      <!-- 归档列表 -->
-
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2021">
-          <span class="tag-text">2021</span>
-        </span>
-        <ul>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            04-10
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2021/04/10/SpringBoot源码初探一/" style="color: #0085a1">
-              <span>
-                SpringBoot源码初探一
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-        </ul>
-      </div>
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2020">
-          <span class="tag-text">2020</span>
-        </span>
-        <ul>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            09-10
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/09/10/为中途接手的项目搭日志/" style="color: #0085a1">
-              <span>
-                为中途接手的项目搭日志
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-17
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/17/生活那些事/" style="color: #0085a1">
-              <span>
-                生活那些事
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/16/Jacoco单元测试覆盖率-两三事/" style="color: #0085a1">
-              <span>
-                Jacoco单元测试覆盖率-两三事
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/16/JavaScript中或逻辑运算符注意点/" style="color: #0085a1">
-              <span>
-                JavaScript中或逻辑运算符注意点
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/16/Java多线程一个有趣的题目/" style="color: #0085a1">
-              <span>
-                Java多线程一个有趣的题目
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-          <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-          <li>
-            08-03
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2020/08/03/开启个人博客的第一天/" style="color: #0085a1">
-              <span>
-                开启个人博客的第一天
-              </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-          </li>
-          
-        </ul>
-      </div>
-      
-
-
-    </div>
-  </div>
-</div>
-
-
-      <!-- 如果开启评论功能 -->
-      
-    </div>
-
-    <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        
-<!-- <h5>VISITORS</h5> -->
-<h5><a href="/">VISITORS</a></h5>
-<div class="widget">
-  <span>
-    Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
-  </span>
-  <br />
-  <span>
-    <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
-  </span>
-</div>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>做个简单的总结，本文暂分析启动过程中初始化SpringApplication对象的逻辑，还是建议大家，刚开始看源码，先不要过于纠结实现的细节，先把握整体流程和框架。</p>
+<p>最后附上一个简图，帮助自己记忆。<br><img src="/2021/04/10/SpringBoot%E6%BA%90%E7%A0%81%E5%88%9D%E6%8E%A2%E4%B8%80/springboot_init.png" alt="springboot_init"></p>
 
 
         <hr>
+        <!-- Pager -->
+        <ul class="pager">
+          
+          
+          <li class="next">
+            <!--<a href="/2020/09/10/为中途接手的项目搭日志/" data-toggle="tooltip" data-placement="top" title="为中途接手的项目搭日志">Next Post &rarr;</a>-->
+            <a href="/2020/09/10/为中途接手的项目搭日志/" data-placement="top" title="为中途接手的项目搭日志">Next Post &rarr;</a>
+          </li>
+          
+        </ul>
+
+        
+        <!-- tip start -->
+        <div class="tip">
+          <p>
+            If you like this blog or find it useful for you, you are welcome to comment on it. You are also welcome to share this blog, so that more people can participate in it. If the images used in the blog infringe your copyright, please contact the author to delete them. Thank you !
+          </p>
+        </div>
+        <!-- tip end -->
+        
+
+        
+        <!-- Sharing Srtart -->
+        <!-- Social Social Share Post -->
+<!-- Docs:https://github.com/overtrue/share.js -->
+
+<div class="social-share" data-initialized="true" data-disabled="tencent ,douban ,qzone ,linkedin ,facebook ,google ,diandian" data-wechat-qrcode-helper="" align="center">
+  <ul class="list-inline text-center social-share-ul">
+    <!--<li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-twitter">
+        <i class="fa fa-twitter fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>-->
+    <li class="social-share-li">
+      <a class="social-share-icon icon-wechat">
+        <i class="fa fa-weixin fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-weibo">
+        <i class="fa fa-weibo fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-qq">
+        <i class="fa fa-qq fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=SpringBoot源码初探一&body=Hi,I found this website and thought you might like it http://exxjam.coding-pages.com/2021/04/10/SpringBoot源码初探一/">
+        <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- css & js -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"> -->
+<script defer="defer" async="true" src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+        <!-- Sharing End -->
+        
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+
+
+<!-- 2. gitment comment -->
+
+
+
+<!-- 3. disqus comment -->
+
+
+
+<!-- 4. valine comment -->
+
+
+    <div id="vcomments"></div>
+
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'kLtsxGXWwmbpyPPgj8RaX5Tu-gzGzoHsz',
+            appKey: 'lqrxU3K3qiCFMHwcxhBF5cMw'
+        })
+    </script>
+
+
+        <!-- comments end -->
+        <hr>
+
+      </div>
+
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
+
     
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#提问"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">提问</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#从入口开始"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">从入口开始</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#初始化SpringApplication对象"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">初始化SpringApplication对象</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#小结"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">小结</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
         <!-- Featured Tags -->
-
-<section>
-  <!-- no hr -->
-  <h5><a href="/tags/">FEATURED TAGS</a></h5>
-  <div class="tags">
-    
-    
-    <a href="/tags/#JavaScript" title="JavaScript" rel="1">JavaScript</a>
-    
-    
-    
-    <a href="/tags/#Unit" title="Unit" rel="1">Unit</a>
-    
-    
-    
-    <a href="/tags/#Java" title="Java" rel="3">Java</a>
-    
-    
-    
-    <a href="/tags/#Thread" title="Thread" rel="1">Thread</a>
-    
-    
-    
-    <a href="/tags/#Log" title="Log" rel="1">Log</a>
-    
-    
-    
-    <a href="/tags/#Life" title="Life" rel="1">Life</a>
-    
-    
-    
-    <a href="/tags/#thinking" title="thinking" rel="1">thinking</a>
-    
-    
-    
-    <a href="/tags/#fun" title="fun" rel="1">fun</a>
-    
-    
-    
-    <a href="/tags/#SpringBoot" title="SpringBoot" rel="1">SpringBoot</a>
-    
-    
-  </div>
-</section>
-
-
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
-
-    
-    <img id="avatar_pic" src="/img/avatar/wangzai.jpg" alt="avatar_pic" style="box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -moz-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);" />
-    
-
-    
-    <p>I have a lovely cat in my life...</p>
-    
-
-    <!-- SNS Link -->
-    <ul class="list-inline">
-      
-
-      
-      <li>
-        <a target="_blank" href="https://github.com/JC0626">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-      <li>
-        <a target="_blank" href="https://www.zhihu.com/people/jia-men-kou-mai-meng-8">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa  fa-stack-1x fa-inverse">知</i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-      <li>
-        <a target="_blank" href="http://weibo.com/u/2647962270">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-    </ul>
-  </div>
-</section>
-
-        <hr>
-    
         
-<!-- <h5>RECENT POSTS</h5> -->
-<h5><a href="/">RECENT POSTS</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="../../2021/04/10/SpringBoot%E6%BA%90%E7%A0%81%E5%88%9D%E6%8E%A2%E4%B8%80/">
-      <li>SpringBoot源码初探一</li>
-    </a>
-    
-    <a href="../../2020/09/10/%E4%B8%BA%E4%B8%AD%E9%80%94%E6%8E%A5%E6%89%8B%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%90%AD%E6%97%A5%E5%BF%97/">
-      <li>为中途接手的项目搭日志</li>
-    </a>
-    
-    <a href="../../2020/08/17/%E7%94%9F%E6%B4%BB%E9%82%A3%E4%BA%9B%E4%BA%8B/">
-      <li>生活那些事</li>
-    </a>
-    
-    <a href="../../2020/08/16/Jacoco%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%8E%87-%E4%B8%A4%E4%B8%89%E4%BA%8B/">
-      <li>Jacoco单元测试覆盖率-两三事</li>
-    </a>
-    
-    <a href="../../2020/08/16/JavaScript%E4%B8%AD%E6%88%96%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6%E6%B3%A8%E6%84%8F%E7%82%B9/">
-      <li>JavaScript中或逻辑运算符注意点</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">FEATURED TAGS</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#Java" title="Java">Java</a>
+            
+            <a class="tag" href="/tags/#SpringBoot" title="SpringBoot">SpringBoot</a>
+            
+          </div>
+        </section>
         
-    <!-- <h5>ARCHIVES</h5> -->
-    <h5><a href="/archives/">ARCHIVES</a></h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li></ul>
+
+        <!-- Friends Blog -->
+        
+      </div>
     </div>
-
-
-        <hr>
-    
-        <!-- Categories -->
-
-<!-- <h5>categories</h5> -->
-<h5><a href="/categories/">CATEGORIES</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="/categories/#Tech">
-      <li>Tech</li>
-    </a>
-    
-    <a href="/categories/#Work">
-      <li>Work</li>
-    </a>
-    
-    <a href="/categories/#MyLife">
-      <li>MyLife</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
-</div>
-
-    
   </div>
-</div>
+</article>
+
+
+
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+<!-- anchorjs end -->
+
 
 
 	<!-- Footer (contains ThemeColor、viewer) -->
@@ -823,7 +717,7 @@
     let jsdelivr = "https://cdn.jsdelivr.net/gh/";
     let gh = "JC0626";
     let ghPages = gh + ".github.io";
-    let pagePath = "tags/Log/index.html";
+    let pagePath = "2021/04/10/SpringBoot源码初探一/";
     let jsdelivrurl;
     if (pagePath.indexOf("index.html") != -1) {
       jsdelivrurl = jsdelivr + gh + "/" + ghPages;
