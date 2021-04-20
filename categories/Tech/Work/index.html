@@ -194,15 +194,15 @@
           
 
           
+          
+
+          
+          
+
+          
           <li>
             <a href="/about/">About</a>
           </li>
-          
-          
-
-          
-          
-
           
           
 
@@ -260,14 +260,10 @@
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 
-  <script>
-
-  </script>
-  <!-- CDN: jsdelivr start -->
   <style type="text/css">
     header.intro-header {
        /*page*/
-        background-image: url('https://cdn.jsdelivr.net/gh/JC0626/JC0626.github.io/undefined');
+        background-image: url('/img/header_img/archive_bg2.jpg');
       
     }
 
@@ -277,7 +273,6 @@
       }
     
   </style>
-  <!-- CDN: jsdelivr end -->
 
 
 
@@ -532,6 +527,10 @@
     
     
     
+    <a href="/tags/#JavaScript" title="JavaScript" rel="1">JavaScript</a>
+    
+    
+    
     <a href="/tags/#Java" title="Java" rel="3">Java</a>
     
     
@@ -548,19 +547,15 @@
     
     
     
+    <a href="/tags/#Life" title="Life" rel="1">Life</a>
+    
+    
+    
     <a href="/tags/#thinking" title="thinking" rel="1">thinking</a>
     
     
     
     <a href="/tags/#fun" title="fun" rel="1">fun</a>
-    
-    
-    
-    <a href="/tags/#JavaScript" title="JavaScript" rel="1">JavaScript</a>
-    
-    
-    
-    <a href="/tags/#Life" title="Life" rel="1">Life</a>
     
     
   </div>
@@ -814,29 +809,6 @@
   <!-- ThemeColor end -->
 
 
-
-  <!-- CDN: jsdelivr start -->
-  <script type="text/javascript">
-    let imgsUrl = document.getElementsByTagName("img");
-    let imgUrl = Array.from(imgsUrl);
-
-    let jsdelivr = "https://cdn.jsdelivr.net/gh/";
-    let gh = "JC0626";
-    let ghPages = gh + ".github.io";
-    let pagePath = "categories/Tech/Work/index.html";
-    let jsdelivrurl;
-    if (pagePath.indexOf("index.html") != -1) {
-      jsdelivrurl = jsdelivr + gh + "/" + ghPages;
-    }else{
-      jsdelivrurl = jsdelivr + gh + "/" + ghPages + "/" + pagePath;
-    }
-    imgUrl.forEach(item => {
-      let oldUrl = item.getAttribute("src");
-      let newUrl = oldUrl.replace(oldUrl, jsdelivrurl + oldUrl).replace("..","");
-      item.setAttribute("src", newUrl);
-    });
-  </script>
-  <!-- CDN: jsdelivr end -->
 
 
 
