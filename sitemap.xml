@@ -58,14 +58,7 @@
   </url>
   
   <url>
-    <loc>http://exxjam.coding-pages.com/tags/index.html</loc>
-    
-    <lastmod>2020-07-21T09:55:27.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://exxjam.coding-pages.com/archive/index.html</loc>
+    <loc>http://exxjam.coding-pages.com/categories/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
     
@@ -79,7 +72,14 @@
   </url>
   
   <url>
-    <loc>http://exxjam.coding-pages.com/categories/index.html</loc>
+    <loc>http://exxjam.coding-pages.com/tags/index.html</loc>
+    
+    <lastmod>2020-07-21T09:55:27.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://exxjam.coding-pages.com/archive/index.html</loc>
     
     <lastmod>2020-07-21T09:55:27.000Z</lastmod>
     
