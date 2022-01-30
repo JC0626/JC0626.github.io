@@ -71,12 +71,12 @@
 
   <!-- Pygments Highlight CSS -->
   
-<link rel="stylesheet" href="../css/highlight.css">
-<link rel="stylesheet" href="../css/widget.css">
-<link rel="stylesheet" href="../css/rocket.css">
-<link rel="stylesheet" href="../css/signature.css">
-<link rel="stylesheet" href="../css/catalog.css">
-<link rel="stylesheet" href="../css/livemylife.css">
+<link rel="stylesheet" href="../../../../css/highlight.css">
+<link rel="stylesheet" href="../../../../css/widget.css">
+<link rel="stylesheet" href="../../../../css/rocket.css">
+<link rel="stylesheet" href="../../../../css/signature.css">
+<link rel="stylesheet" href="../../../../css/catalog.css">
+<link rel="stylesheet" href="../../../../css/livemylife.css">
 
 
   
@@ -133,10 +133,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="http://exxjam.coding-pages.com/about/">
+  <link rel="canonical" href="http://exxjam.coding-pages.com/2022/01/30/联合索引在索引文件中的存储方式/">
   <title>
     
-    About - Stop complaining and thinking
+    联合索引在索引文件中的存储方式 - Stop complaining and thinking
     
   </title>
 <meta name="generator" content="Hexo 4.2.1"></head>
@@ -262,8 +262,8 @@
 
   <style type="text/css">
     header.intro-header {
-       /*page*/
-        background-image: url('/img/scenery/about_bg.jpg');
+       /*post*/
+        background-image: url('/img/header_img/tag_bg.jpg');
       
     }
 
@@ -285,10 +285,40 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>About</h1>
-            <!--<hr class="small">-->
-            <span class="subheading">那些年吹过的牛逼，还有很多没有实现 ......</span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+              
+            </div>
+            <h1>联合索引在索引文件中的存储方式</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">
+              Posted by Jarvis on
+              2022-01-30 21:11:10
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">3</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">987</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- 不蒜子统计 start -->
+            <span class="meta">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            <!-- WordCount end -->
+            
+
+
           </div>
           
         </div>
@@ -329,295 +359,228 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-	<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
+	<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-    <!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-
-      <h2 id="Talk-To-Me"><a href="#Talk-To-Me" class="headerlink" title="Talk To Me"></a>Talk To Me</h2><blockquote>
-<p>I always say to myself :</p>
-<p>if my life is peaceful and plain sailing all the time ,</p>
-<p>it means to die in the electrocardiogram …</p>
-</blockquote>
-<h2 id="Just-Me"><a href="#Just-Me" class="headerlink" title="Just Me"></a>Just Me</h2><p><img src="/about/img/scenery/about_bg2.jpg" width="350" alt="about_bg2"></p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>只要是用过MySQL的同学，关于联合索引都听过一个规则：</p>
 <blockquote>
-<p>有一种状态 叫一个人 它总是挑战语言的贫乏 只能在某首歌中找寻灵感；</p>
-<p>有一种氨基酸 叫多巴胺 你不知道它何时会在你体内产生；</p>
-<p>有一种上瘾 叫抽烟 其实你抽的只是心情 又或是寂寞；</p>
-<p>有一种态度 叫纹身 其实我们只是想与众不同；</p>
-<p>有一种经历 叫旅行 年轻只有一次 不出去走走 或许以为眼前的就是世界；</p>
-<p>有一种人生 叫心电图 如果你总是一帆风顺 那么你就挂了；</p>
-<p>有一种悠闲 叫 “ 老板给我杯Cappuccino “ 香香甜甜 浓郁中带着苦涩 醇和而隽永 …</p>
+<p>联合索引中某一列索引的范围搜索如’&lt;’、’&gt;’、’like’，会导致后续索引列失效。</p>
 </blockquote>
-<h2 id="The-Longest-Way-…"><a href="#The-Longest-Way-…" class="headerlink" title="The Longest Way …"></a>The Longest Way …</h2><p><img src="/about/img/scenery/about_bg4.jpg" width="350" alt="about_bg4"></p>
+<p>对于这样的规则，时间久了，似乎成了一种不需要思考就能直接使用的准则。但未必真的理解，为何会失效的原因。<br>至少我自己这种情况持续了很久，直到被问原因的那天，我才发现，用着用着竟然把准则当成了原因。</p>
+<p>于是静下心来，开始思考：索引会失效，一定是跟索引文件有关了，那联合索引的索引文件，或者说索引的B+树长什么样？<br>好吧，其实问题就出在这，想了半天，竟然不知道联合索引的B+树长什么样，平时网上看到的很多关于索引的文章，都是基于单索引（主键索引、普通索引等等）来写的，所以印象中只记着单key的B+树。</p>
 <blockquote>
-<p> 活在当下 然后忘记 继续往前走 …</p>
-<p> 即便是一个人 …</p>
-<p> On the way to meet myself …</p>
+<p>本文基于InnoDB</p>
 </blockquote>
-<h2 id="Follow-With-Interest-Blogs"><a href="#Follow-With-Interest-Blogs" class="headerlink" title="Follow With Interest Blogs"></a>Follow With Interest Blogs</h2><blockquote>
-<p>Neo Peng：<a href="https://zhile.io" target="_blank" rel="noopener">https://zhile.io</a></p>
-<p>李卫民：<a href="https://www.funtl.com/zh/guide" target="_blank" rel="noopener">https://www.funtl.com/zh/guide</a></p>
-<p>duanxz：<a href="https://www.cnblogs.com/duanxz/tag" target="_blank" rel="noopener">https://www.cnblogs.com/duanxz/tag</a></p>
-<p>Java1234_小锋：<a href="http://blog.java1234.com/index.html" target="_blank" rel="noopener">http://blog.java1234.com/index.html</a></p>
-<p>Deserts：<a href="https://deserts.io" target="_blank" rel="noopener">https://deserts.io</a></p>
-<p>Super Snail：<a href="https://www.dusign.net" target="_blank" rel="noopener">https://www.dusign.net</a></p>
-<p>KIERAN’S BLOG：<a href="https://go.kieran.top" target="_blank" rel="noopener">https://go.kieran.top</a></p>
-<p>Mr.Seven：<a href="https://itimetraveler.github.io" target="_blank" rel="noopener">https://itimetraveler.github.io</a></p>
+<h2 id="联合索引的存储结构"><a href="#联合索引的存储结构" class="headerlink" title="联合索引的存储结构"></a>联合索引的存储结构</h2><p>先创建一张样例表T1，有字段a,b,c,d,e，其中a是主键，除e为varchar其余为int类型，并创建了一个联合索引idx_t1_bcd(b,c,d)。<br>在B+树上的结构如下图所示。联合索引的所有索引列都出现在索引树上，并依次比较三列的大小。<br><img src="/2022/01/30/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E5%9C%A8%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/demo%E8%A1%A8%E7%BB%93%E6%9E%84.png" alt="demo表结构.png"></p>
+<p>该表对应的具体表数据如下图所示：<br><img src="/2022/01/30/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E5%9C%A8%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/demo%E8%A1%A8%E6%95%B0%E6%8D%AE.png" alt="demo表数据.png"></p>
+<p>看了上述两图，再回想单索引的B+树结构，其实很容易就能发现，联合索引的Key比单索引只是多了几列而已，且对于联合索引(b,c,d)来讲，整个B+树是按照索引列b整体有序的，而在索引列b相等的情况，按照索引列c有序，对于索引列d同理。所以整棵B+树，除了联合索引的第一列，其他索引列都只是保持部分有序。</p>
+<h2 id="联合索引的查找过程"><a href="#联合索引的查找过程" class="headerlink" title="联合索引的查找过程"></a>联合索引的查找过程</h2><p>我们以最简单的例子来走一遍查找的过程。SQL如下：</p>
+<blockquote>
+<p>selet * from T1 where b = 13 and c = 16 and d = 5;</p>
 </blockquote>
-<h2 id="Contact-me"><a href="#Contact-me" class="headerlink" title="Contact me"></a>Contact me</h2><blockquote>
-<p>Email：<a href="mailto:601521821@qq.com">601521821@qq.com</a></p>
+<p>大致流程如下图所示：<br><img src="/2022/01/30/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E5%9C%A8%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/demo%E6%9F%A5%E6%89%BE%E8%BF%87%E7%A8%8B.png" alt="demo查找过程.png"><br>根据索引列b=13，从图中的步骤1-&gt;2，就能找到划红线的三块数据，然后在根据索引列c进行查找，且可见这3条数据中，索引列c是有序的，而索引列d不一定是有序的。接着3-2的步骤，根据c=16就能筛选出下面两条数据，此时d在这两条数据中又是有序的了，最后再根据d=5的值找到最终的数据，然后根据B+树的中的data，进行回表操作。</p>
+<h2 id="做个小结"><a href="#做个小结" class="headerlink" title="做个小结"></a>做个小结</h2><p>看了上述联合索引的存储结构以及查找过程，基本也就清楚了为什么联合索引的范围查找会导致后续索引列的失效。</p>
+<blockquote>
+<p>原因：联合索引的B+树是按照首列的整体有序，而对于后续几列索引都只能做到部分有序，且前提是在前一列索引值相等的情况下有序。所以一旦对于某一列使用了范围查找，后续紧跟的一列索引列就不能保证有序，MySQL就会放弃使用该索引，即失效。</p>
 </blockquote>
-<h2 id="Treat-me-to-coffee"><a href="#Treat-me-to-coffee" class="headerlink" title="Treat me to coffee"></a>Treat me to coffee</h2><blockquote>
-<p> If you feel that what I have written is of some value to you, I am glad that you are willing to invite me to drink coffee…</p>
-</blockquote>
-<p><img src="/about/img/scenery/treat_me_to_coffee.png" width="350" alt="treat_me_to_coffee.png"></p>
-
-
-      <!-- 如果开启评论功能 -->
-      
-      <hr>
-
-      
-
-      
-      
-    </div>
-
-    <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        
-<!-- <h5>VISITORS</h5> -->
-<h5><a href="/">VISITORS</a></h5>
-<div class="widget">
-  <span>
-    Viewed <b><i><span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Times
-  </span>
-  <br />
-  <span>
-    <b><i><span id="busuanzi_value_site_uv"><i class="fa fa-spinner fa-spin"></i></span></i></b> Visitors In Total
-  </span>
-</div>
+<p>另外，有了这些知识的铺垫，对于联合索引的最左匹配原则，似乎也能够解释了。<br>正如上面所说，联合索引是按照首列整体有序，后续几列部分有序存储的，如果在SQL中没有使用第一列的索引，就无法利用B+索引树进行查找，只能进行全表扫描。</p>
+<p>emmm…所以最终的结论，还是需要掌握底层基础知识呀，掌握了很多问题都能迎刃而解。</p>
 
 
         <hr>
+        <!-- Pager -->
+        <ul class="pager">
+          
+          
+          <li class="next">
+            <!--<a href="/2021/08/18/Spring循环依赖和三级缓存/" data-toggle="tooltip" data-placement="top" title="Spring循环依赖和三级缓存">Next Post &rarr;</a>-->
+            <a href="/2021/08/18/Spring循环依赖和三级缓存/" data-placement="top" title="Spring循环依赖和三级缓存">Next Post &rarr;</a>
+          </li>
+          
+        </ul>
+
+        
+        <!-- tip start -->
+        <div class="tip">
+          <p>
+            If you like this blog or find it useful for you, you are welcome to comment on it. You are also welcome to share this blog, so that more people can participate in it. If the images used in the blog infringe your copyright, please contact the author to delete them. Thank you !
+          </p>
+        </div>
+        <!-- tip end -->
+        
+
+        
+        <!-- Sharing Srtart -->
+        <!-- Social Social Share Post -->
+<!-- Docs:https://github.com/overtrue/share.js -->
+
+<div class="social-share" data-initialized="true" data-disabled="tencent ,douban ,qzone ,linkedin ,facebook ,google ,diandian" data-wechat-qrcode-helper="" align="center">
+  <ul class="list-inline text-center social-share-ul">
+    <!--<li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-twitter">
+        <i class="fa fa-twitter fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>-->
+    <li class="social-share-li">
+      <a class="social-share-icon icon-wechat">
+        <i class="fa fa-weixin fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-weibo">
+        <i class="fa fa-weibo fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon icon-qq">
+        <i class="fa fa-qq fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+    <li class="social-share-li">
+      <a target="_blank" class="social-share-icon" href="mailto:?subject=联合索引在索引文件中的存储方式&body=Hi,I found this website and thought you might like it http://exxjam.coding-pages.com/2022/01/30/联合索引在索引文件中的存储方式/">
+        <i class="fa fa-envelope fa-1x" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- css & js -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css"> -->
+<script defer="defer" async="true" src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+        <!-- Sharing End -->
+        
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+
+
+<!-- 2. gitment comment -->
+
+
+
+<!-- 3. disqus comment -->
+
+
+
+<!-- 4. valine comment -->
+
+
+    <div id="vcomments"></div>
+
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'kLtsxGXWwmbpyPPgj8RaX5Tu-gzGzoHsz',
+            appKey: 'lqrxU3K3qiCFMHwcxhBF5cMw'
+        })
+    </script>
+
+
+        <!-- comments end -->
+        <hr>
+
+      </div>
+
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
+
     
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#背景"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">背景</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#联合索引的存储结构"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">联合索引的存储结构</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#联合索引的查找过程"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">联合索引的查找过程</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#做个小结"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">做个小结</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
         <!-- Featured Tags -->
-
-<section>
-  <!-- no hr -->
-  <h5><a href="/tags/">FEATURED TAGS</a></h5>
-  <div class="tags">
-    
-    
-    <a href="/tags/#Java" title="Java" rel="4">Java</a>
-    
-    
-    
-    <a href="/tags/#Thread" title="Thread" rel="1">Thread</a>
-    
-    
-    
-    <a href="/tags/#SpringBoot" title="SpringBoot" rel="1">SpringBoot</a>
-    
-    
-    
-    <a href="/tags/#Log" title="Log" rel="1">Log</a>
-    
-    
-    
-    <a href="/tags/#Spring" title="Spring" rel="1">Spring</a>
-    
-    
-    
-    <a href="/tags/#Life" title="Life" rel="1">Life</a>
-    
-    
-    
-    <a href="/tags/#thinking" title="thinking" rel="1">thinking</a>
-    
-    
-    
-    <a href="/tags/#fun" title="fun" rel="1">fun</a>
-    
-    
-    
-    <a href="/tags/#MySQL" title="MySQL" rel="1">MySQL</a>
-    
-    
-    
-    <a href="/tags/#JavaScript" title="JavaScript" rel="1">JavaScript</a>
-    
-    
-    
-    <a href="/tags/#MQ" title="MQ" rel="1">MQ</a>
-    
-    
-    
-    <a href="/tags/#Unit" title="Unit" rel="1">Unit</a>
-    
-    
-  </div>
-</section>
-
-
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
-
-    
-    <img id="avatar_pic" src="/img/avatar/wangzai.jpg" alt="avatar_pic" style="box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -moz-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);
-    -webkit-box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, .5);" />
-    
-
-    
-    <p>I have a lovely cat in my life...</p>
-    
-
-    <!-- SNS Link -->
-    <ul class="list-inline">
-      
-
-      
-      <li>
-        <a target="_blank" href="https://github.com/JC0626">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-      <li>
-        <a target="_blank" href="https://www.zhihu.com/people/jia-men-kou-mai-meng-8">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa  fa-stack-1x fa-inverse">知</i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-      <li>
-        <a target="_blank" href="http://weibo.com/u/2647962270">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-    </ul>
-  </div>
-</section>
-
-        <hr>
-    
         
-<!-- <h5>RECENT POSTS</h5> -->
-<h5><a href="/">RECENT POSTS</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="../2022/01/30/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E5%9C%A8%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/">
-      <li>联合索引在索引文件中的存储方式</li>
-    </a>
-    
-    <a href="../2021/08/18/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E5%92%8C%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98/">
-      <li>Spring循环依赖和三级缓存</li>
-    </a>
-    
-    <a href="../2021/05/01/QMQ%E4%B8%8ERocketMQ/">
-      <li>QMQ与RocketMQ</li>
-    </a>
-    
-    <a href="../2021/04/10/SpringBoot%E6%BA%90%E7%A0%81%E5%88%9D%E6%8E%A2%E4%B8%80/">
-      <li>SpringBoot源码初探一</li>
-    </a>
-    
-    <a href="../2020/09/10/%E4%B8%BA%E4%B8%AD%E9%80%94%E6%8E%A5%E6%89%8B%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%90%AD%E6%97%A5%E5%BF%97/">
-      <li>为中途接手的项目搭日志</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">FEATURED TAGS</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+            
+          </div>
+        </section>
         
-    <!-- <h5>ARCHIVES</h5> -->
-    <h5><a href="/archives/">ARCHIVES</a></h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li></ul>
+
+        <!-- Friends Blog -->
+        
+      </div>
     </div>
-
-
-        <hr>
-    
-        <!-- Categories -->
-
-<!-- <h5>categories</h5> -->
-<h5><a href="/categories/">CATEGORIES</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="/categories/#Tech">
-      <li>Tech</li>
-    </a>
-    
-    <a href="/categories/#Work">
-      <li>Work</li>
-    </a>
-    
-    <a href="/categories/#MyLife">
-      <li>MyLife</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
-</div>
-
-    
   </div>
-</div>
+</article>
+
+
+
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
+
+<!-- anchorjs end -->
+
 
 
 	<!-- Footer (contains ThemeColor、viewer) -->

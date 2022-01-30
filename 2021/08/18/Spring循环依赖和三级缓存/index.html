@@ -194,12 +194,12 @@
           
 
           
+          
+
+          
           <li>
             <a href="/about/">About</a>
           </li>
-          
-          
-
           
           
 
@@ -309,7 +309,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">3.7k</span> In Total
+              Words <span class="post-count">3.8k</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- 不蒜子统计 start -->
@@ -412,7 +412,8 @@
 <p>其中<code>addSingletonFactory()</code>的逻辑是将Bean包装成一个工厂添加进三级缓存中（即上面提到的三级缓存的放置时机），见如下代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Add the given singleton factory for building the specified singleton</span></span><br><span class="line"><span class="comment"> * if necessary.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;To be called for eager registration of singletons, e.g. to be able to</span></span><br><span class="line"><span class="comment"> * resolve circular references.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> beanName the name of the bean</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> singletonFactory the factory for the singleton object</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">addSingletonFactory</span><span class="params">(String beanName, ObjectFactory&lt;?&gt; singletonFactory)</span> </span>&#123;</span><br><span class="line">    Assert.notNull(singletonFactory, <span class="string">"Singleton factory must not be null"</span>);</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.singletonObjects.containsKey(beanName)) &#123;</span><br><span class="line">            <span class="keyword">this</span>.singletonFactories.put(beanName, singletonFactory);</span><br><span class="line">            <span class="keyword">this</span>.earlySingletonObjects.remove(beanName);</span><br><span class="line">            <span class="keyword">this</span>.registeredSingletons.add(beanName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意：三级缓存中添加的只是一个工厂，通过这个工厂（<code>ObjectFactory</code>）的<code>getObject()</code>方法可以得到一个对象（提前暴露的），执行<code>getObject()</code>方法时真正执行的是工厂的<code>getEarlyBeanReference()</code>方法。</p>
-<p>那么，什么时候会触发调用<code>getObject()</code>呢？我们继续往下走。<br>此时开始为A注入属性，发现B还未实例化，则开始实例化B，同样跟A一样调用<code>getBean()</code>，然后在为B属性注入时，发现依赖A，则会调用<code>getBean()</code> -&gt; <code>doGetBean()</code> -&gt; <code>getSingleton()</code>，在该方法中，会调用<code>ObjectFactory</code>的<code>getObject()</code>方法拿到A对象，并放入二级缓存中（即二级缓存的存放时机）。</p>
+<p>那么，什么时候会触发调用<code>getObject()</code>呢？我们继续往下走。</p>
+<p>此时开始为A注入属性，发现B还未实例化，则开始实例化B，同样跟A一样调用<code>getBean()</code>，然后在为B属性注入时，发现依赖A，则会调用<code>getBean()</code> -&gt; <code>doGetBean()</code> -&gt; <code>getSingleton()</code>，在该方法中，会调用<code>ObjectFactory</code>的<code>getObject()</code>方法拿到A对象，并放入二级缓存中（即二级缓存的存放时机）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Return the (raw) singleton object registered under the given name.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Checks already instantiated singletons and also allows for an early</span></span><br><span class="line"><span class="comment"> * reference to a currently created singleton (resolving a circular reference).</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> beanName the name of the bean to look for</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> allowEarlyReference whether early references should be created or not</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the registered singleton object, or &#123;<span class="doctag">@code</span> null&#125; if none found</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">getSingleton</span><span class="params">(String beanName, <span class="keyword">boolean</span> allowEarlyReference)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从一级缓存中获取bean实例</span></span><br><span class="line">    Object singletonObject = <span class="keyword">this</span>.singletonObjects.get(beanName);</span><br><span class="line">    <span class="comment">// 一级缓存中不存在，且该bean正在创建中</span></span><br><span class="line">    <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; isSingletonCurrentlyInCreation(beanName)) &#123;</span><br><span class="line">        <span class="comment">// lock</span></span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">            <span class="comment">// 从二级缓存中获取</span></span><br><span class="line">            singletonObject = <span class="keyword">this</span>.earlySingletonObjects.get(beanName);</span><br><span class="line">            <span class="comment">// 二级缓存中不存在，且运行提前暴露（默认都为true）</span></span><br><span class="line">            <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; allowEarlyReference) &#123;</span><br><span class="line">                <span class="comment">// 从三级缓存中获取对应bean工厂</span></span><br><span class="line">                ObjectFactory&lt;?&gt; singletonFactory = <span class="keyword">this</span>.singletonFactories.get(beanName);</span><br><span class="line">                <span class="keyword">if</span> (singletonFactory != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// 从bean工厂获取bean对象（也有可能是代理），并放入二级缓存以及从三级缓存中移除</span></span><br><span class="line">                    singletonObject = singletonFactory.getObject();</span><br><span class="line">                    <span class="keyword">this</span>.earlySingletonObjects.put(beanName, singletonObject);</span><br><span class="line">                    <span class="keyword">this</span>.singletonFactories.remove(beanName);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (singletonObject != NULL_OBJECT ? singletonObject : <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样B对象就能顺利完成属性注入以及后续的步骤，然后再回过头来走完A对象剩下的流程。<br>至此，循环依赖已经完美解决了！</p>
 <h4 id="哈？就这？"><a href="#哈？就这？" class="headerlink" title="哈？就这？"></a>哈？就这？</h4><p>看完上面Spring解决循环依赖的方法，似乎觉得只要两个级别的缓存（<code>singletonObjects</code>和<code>earlySingletonObjects</code>）就够了，没必要上三个缓存呀。<br>此时我们再仔细分析下三级缓存<code>singletodangnFactories</code>，当<code>singletodangnFactories</code>调用<code>getObject()</code>时最终进入到<code>getEarlyBeanReference()</code>：</p>
@@ -440,12 +441,18 @@
 <ol>
 <li>违背初衷。如果不用三级缓存，使用二级缓存，违背了Spring在结合AOP跟Bean的生命周期的设计！Spring结合AOP跟Bean的生命周期本身就是通过<code>AnnotationAwareAspectJAutoProxyCreator</code>这个后置处理器来完成的，在这个后置处理的<code>postProcessAfterInitialization</code>方法中对初始化后的Bean完成AOP代理。如果出现了循环依赖，那没有办法，只有给Bean先创建代理，但是没有出现循环依赖的情况下，设计之初就是让Bean在生命周期的最后一步完成代理而不是在实例化后就立马完成代理。</li>
 <li>推翻重来。如果选择不使用三级缓存，那就要把Bean的生命周期给来个大改造，成本可想而知。对于修改庞大的代码，危险程度每个程序员心里清楚的很:smirk:。</li>
+<li>（2021-08-26补充）使用三个级别的缓存，能保证被三级缓存ObjectFactory创建出来的Bean对象只有一个。因为一旦执行ObjectFactory.getBean()，结果就会放入二级缓存，后续就能在二级缓存中获取到，保证唯一性。</li>
 </ol>
 
 
         <hr>
         <!-- Pager -->
         <ul class="pager">
+          
+          <li class="previous">
+            <!--<a href="/2022/01/30/联合索引在索引文件中的存储方式/" data-toggle="tooltip" data-placement="top" title="联合索引在索引文件中的存储方式">&larr; Previous Post</a>-->
+            <a href="/2022/01/30/联合索引在索引文件中的存储方式/" data-placement="top" title="联合索引在索引文件中的存储方式">&larr; Previous Post</a>
+          </li>
           
           
           <li class="next">
@@ -690,7 +697,7 @@
         <p class="copyright text-muted">
           Copyright &copy;
           Jarvis
-          2021
+          2022
           <br>
           Theme by
           <a href="http://beantech.org" target="_blank" rel="noopener">BeanTech</a>
