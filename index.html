@@ -360,6 +360,50 @@
   
 
 
+  <a href="/2022/01/30/联合索引在索引文件中的存储方式/">
+    <h2 class="post-title">
+      联合索引在索引文件中的存储方式
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      背景只要是用过MySQL的同学，关于联合索引都听过一个规则：
+
+联合索引中某一列索引的范围搜索如’&lt;’、’&gt;’、’like’，会导致后续索引列失效。
+
+对于这样的规则，时间久了，似乎成了一种不需要思考就能直接使用的准则。但未必真的理解失效的原因。至少我自己这种情况持续了很久，直到被问原因的那天，我才发现，用着用着竟然把准则当成了原因。
+于是静下心来，开始思考：索引会失效，一定是跟......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by Jarvis on
+    2022-01-30 21:11:10
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#MySQL" title="MySQL">MySQL</a>
+    
+  </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+  
+  <!-- top start (article top hot config) -->
+  
+  <div class="top">
+    <div class="iconfont icon-hot animated infinite tada"></div>
+  </div>
+  
+  <!-- top end -->
+  
+
+
   <a href="/2021/08/18/Spring循环依赖和三级缓存/">
     <h2 class="post-title">
       Spring循环依赖和三级缓存
@@ -404,9 +448,41 @@ Spring有哪三级缓存？
   
   <!-- top start (article top hot config) -->
   
-  <div class="top">
-    <div class="iconfont icon-hot animated infinite tada"></div>
+  <!-- top end -->
+  
+
+
+  <a href="/2021/05/01/QMQ与RocketMQ/">
+    <h2 class="post-title">
+      QMQ与RocketMQ
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      背景公司内部一直使用QMQ作为整个公司各业务的消息中间件，今天对QMQ和RocketMQ进行简单的介绍和比较，之所以选择RocketMQ，是因为RocketMQ比较流行，而且QMQ的实现是建立在RocketMQ之上的。
+大家对于QMQ可能听说的比较少，QMQ 是携程集团内部广泛使用的消息中间件，是携程集团自研的基于文件存储的分布式消息队列，具备高可靠、高吞吐和丰富的治理能力。目前已经开源，g......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by Jarvis on
+    2021-05-01 17:36:06
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#MQ" title="MQ">MQ</a>
+    
   </div>
+  
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+  
+  <!-- top start (article top hot config) -->
   
   <!-- top end -->
   
@@ -434,82 +510,6 @@ Spring有哪三级缓存？
     <a href="/tags/#Java" title="Java">Java</a>
     
     <a href="/tags/#SpringBoot" title="SpringBoot">SpringBoot</a>
-    
-  </div>
-  
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-  
-  <!-- top start (article top hot config) -->
-  
-  <!-- top end -->
-  
-
-
-  <a href="/2022/01/30/联合索引在索引文件中的存储方式/">
-    <h2 class="post-title">
-      联合索引在索引文件中的存储方式
-    </h2>
-    <h3 class="post-subtitle">
-      
-    </h3>
-    <div class="post-content-preview">
-      背景只要是用过MySQL的同学，关于联合索引都听过一个规则：
-
-联合索引中某一列索引的范围搜索如’&lt;’、’&gt;’、’like’，会导致后续索引列失效。
-
-对于这样的规则，时间久了，似乎成了一种不需要思考就能直接使用的准则。但未必真的理解，为何会失效的原因。至少我自己这种情况持续了很久，直到被问原因的那天，我才发现，用着用着竟然把准则当成了原因。
-于是静下心来，开始思考：索引会失效，......
-    </div>
-  </a>
-  
-  <p class="post-meta" style="margin: 10px 0;">
-    Posted by Jarvis on
-    2022-01-30 21:11:10
-  </p>
-  <div class="tags">
-    
-    <a href="/tags/#MySQL" title="MySQL">MySQL</a>
-    
-  </div>
-  
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-  
-  <!-- top start (article top hot config) -->
-  
-  <!-- top end -->
-  
-
-
-  <a href="/2021/05/01/QMQ与RocketMQ/">
-    <h2 class="post-title">
-      QMQ与RocketMQ
-    </h2>
-    <h3 class="post-subtitle">
-      
-    </h3>
-    <div class="post-content-preview">
-      背景公司内部一直使用QMQ作为整个公司各业务的消息中间件，今天对QMQ和RocketMQ进行简单的介绍和比较，之所以选择RocketMQ，是因为RocketMQ比较流行，而且QMQ的实现是建立在RocketMQ之上的。
-大家对于QMQ可能听说的比较少，QMQ 是携程集团内部广泛使用的消息中间件，是携程集团自研的基于文件存储的分布式消息队列，具备高可靠、高吞吐和丰富的治理能力。目前已经开源，g......
-    </div>
-  </a>
-  
-  <p class="post-meta" style="margin: 10px 0;">
-    Posted by Jarvis on
-    2021-05-01 17:36:06
-  </p>
-  <div class="tags">
-    
-    <a href="/tags/#MQ" title="MQ">MQ</a>
     
   </div>
   
@@ -786,6 +786,14 @@ Jacoco言归正传，公司统一采用Jac......
   <div class="tags">
     
     
+    <a href="/tags/#Unit" title="Unit" rel="1">Unit</a>
+    
+    
+    
+    <a href="/tags/#JavaScript" title="JavaScript" rel="1">JavaScript</a>
+    
+    
+    
     <a href="/tags/#Java" title="Java" rel="4">Java</a>
     
     
@@ -798,15 +806,19 @@ Jacoco言归正传，公司统一采用Jac......
     
     
     
-    <a href="/tags/#Log" title="Log" rel="1">Log</a>
-    
-    
-    
-    <a href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+    <a href="/tags/#MQ" title="MQ" rel="1">MQ</a>
     
     
     
     <a href="/tags/#Life" title="Life" rel="1">Life</a>
+    
+    
+    
+    <a href="/tags/#Log" title="Log" rel="1">Log</a>
+    
+    
+    
+    <a href="/tags/#MySQL" title="MySQL" rel="1">MySQL</a>
     
     
     
@@ -818,19 +830,7 @@ Jacoco言归正传，公司统一采用Jac......
     
     
     
-    <a href="/tags/#MySQL" title="MySQL" rel="1">MySQL</a>
-    
-    
-    
-    <a href="/tags/#JavaScript" title="JavaScript" rel="1">JavaScript</a>
-    
-    
-    
-    <a href="/tags/#MQ" title="MQ" rel="1">MQ</a>
-    
-    
-    
-    <a href="/tags/#Unit" title="Unit" rel="1">Unit</a>
+    <a href="/tags/#Spring" title="Spring" rel="1">Spring</a>
     
     
   </div>
