@@ -194,12 +194,12 @@
           
 
           
-          
-
-          
           <li>
             <a href="/about/">About</a>
           </li>
+          
+          
+
           
           
 
@@ -346,6 +346,47 @@
 
       <!-- Main Content -->
 
+
+<div class="post-preview">
+
+  
+  <!-- top start (article top hot config) -->
+  
+  <div class="top">
+    <div class="iconfont icon-hot animated infinite tada"></div>
+  </div>
+  
+  <!-- top end -->
+  
+
+
+  <a href="/2023/02/04/记一次MySQL死锁/">
+    <h2 class="post-title">
+      记一次MySQL死锁
+    </h2>
+    <h3 class="post-subtitle">
+      
+    </h3>
+    <div class="post-content-preview">
+      背景公司项目生产环境有一接口偶尔会有死锁报错，且每次都是在请求量较大的情况下发生。虽不影响业务，但还是决定查下原因，做下优化。
+死锁发生处的代码逻辑（伪代码）:
+123456789101112@Transactionalfunction(Long businessId, List list) &#123;  // 根据businessId，批量逻辑删除历史数据  RecordExample ......
+    </div>
+  </a>
+  
+  <p class="post-meta" style="margin: 10px 0;">
+    Posted by Jarvis on
+    2023-02-04 11:11:47
+  </p>
+  <div class="tags">
+    
+    <a href="/tags/#MySQL" title="MySQL">MySQL</a>
+    
+  </div>
+  
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -703,48 +744,15 @@ Jacoco言归正传，公司统一采用Jac......
 </div>
 <hr>
 
-<div class="post-preview">
-
-  
-  <!-- top start (article top hot config) -->
-  
-  <!-- top end -->
-  
-
-
-  <a href="/2020/08/03/开启个人博客的第一天/">
-    <h2 class="post-title">
-      开启个人博客的第一天
-    </h2>
-    <h3 class="post-subtitle">
-      
-    </h3>
-    <div class="post-content-preview">
-      Hello world！记录下个人博客正式开启的第一天！
-曾今之前也注册过一些大大小小的博客网站，有CSDN、博客园（https://www.cnblogs.com/JcWft/）等，但总有一种寄人篱下的感觉。而且页面上充斥着太多的广告，让人不太自在。
-诉求个人特别希望有一块自己的净土，有空分享分享技术心得，顺便记录下自己生活中有趣的事情和瞬间。由于个人对于CSDN、博客园的认知更多是工作和......
-    </div>
-  </a>
-  
-  <p class="post-meta" style="margin: 10px 0;">
-    Posted by Jarvis on
-    2020-08-03 08:33:04
-  </p>
-  <div class="tags">
-    
-    <a href="/tags/#Life" title="Life">Life</a>
-    
-  </div>
-  
-
-</div>
-<hr>
-
 
 
   <!-- Pager -->
   <ul class="pager">
     
+    
+    <li class="next">
+      <a href="/archives/2/">Older Posts &rarr;</a>
+    </li>
     
   </ul>
 
@@ -802,15 +810,15 @@ Jacoco言归正传，公司统一采用Jac......
     
     
     
-    <a href="/tags/#SpringBoot" title="SpringBoot" rel="1">SpringBoot</a>
-    
-    
-    
     <a href="/tags/#MQ" title="MQ" rel="1">MQ</a>
     
     
     
-    <a href="/tags/#Life" title="Life" rel="1">Life</a>
+    <a href="/tags/#SpringBoot" title="SpringBoot" rel="1">SpringBoot</a>
+    
+    
+    
+    <a href="/tags/#Spring" title="Spring" rel="1">Spring</a>
     
     
     
@@ -818,7 +826,7 @@ Jacoco言归正传，公司统一采用Jac......
     
     
     
-    <a href="/tags/#MySQL" title="MySQL" rel="1">MySQL</a>
+    <a href="/tags/#Life" title="Life" rel="1">Life</a>
     
     
     
@@ -830,7 +838,7 @@ Jacoco言归正传，公司统一采用Jac......
     
     
     
-    <a href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+    <a href="/tags/#MySQL" title="MySQL" rel="2">MySQL</a>
     
     
   </div>
@@ -911,6 +919,10 @@ Jacoco言归正传，公司统一采用Jac......
 <div class="widget">
   <ul>
     
+    <a href="2023/02/04/%E8%AE%B0%E4%B8%80%E6%AC%A1MySQL%E6%AD%BB%E9%94%81/">
+      <li>记一次MySQL死锁</li>
+    </a>
+    
     <a href="2022/01/30/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E5%9C%A8%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F/">
       <li>联合索引在索引文件中的存储方式</li>
     </a>
@@ -927,10 +939,6 @@ Jacoco言归正传，公司统一采用Jac......
       <li>SpringBoot源码初探一</li>
     </a>
     
-    <a href="2020/09/10/%E4%B8%BA%E4%B8%AD%E9%80%94%E6%8E%A5%E6%89%8B%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%90%AD%E6%97%A5%E5%BF%97/">
-      <li>为中途接手的项目搭日志</li>
-    </a>
-    
   </ul>
 </div>
 
@@ -941,7 +949,7 @@ Jacoco言归正传，公司统一采用Jac......
     <!-- <h5>ARCHIVES</h5> -->
     <h5><a href="/archives/">ARCHIVES</a></h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2023/02/">二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/05/">五月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/09/">九月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
 
@@ -1033,7 +1041,7 @@ Jacoco言归正传，公司统一采用Jac......
         <p class="copyright text-muted">
           Copyright &copy;
           Jarvis
-          2022
+          2023
           <br>
           Theme by
           <a href="http://beantech.org" target="_blank" rel="noopener">BeanTech</a>
